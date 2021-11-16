@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace Hangman2
 {
@@ -35,11 +36,11 @@ namespace Hangman2
             //4. Clear console screen
             //... Write user current score / word with guessed characters like 'han_g_an' / used characters
             Console.Clear();
-
+            Console.Write("Your score is: "+gameConfig.Score);
             //5. Ready user input
             //If it was already used then write that information on console
             //...
-            var userInput = "a";
+            var userInput = GetInput();
 
             //6. Check if it is correct guess
             //... gameConfig.UsedCharacters
@@ -79,6 +80,19 @@ namespace Hangman2
             Console.WriteLine("Generated phrase is: " + wordToGuess);
             return wordToGuess;
         }
-
+        static string GetInput()
+        {
+            Console.WriteLine("Type a char");
+            string givenString = Console.ReadLine();
+            if (givenString.Length > 1)
+            {
+                Console.WriteLine("It has to be char, not string");
+                return GetInput();
+            }
+            else
+            {
+                return givenString;
+            }
+        }
     }
 }
