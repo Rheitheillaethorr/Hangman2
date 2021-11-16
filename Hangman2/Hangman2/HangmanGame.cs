@@ -19,8 +19,7 @@ namespace Hangman2
             string category = RandomizeTheCategory();
             //2. Get random password
             //...
-            // Do uzycia var randomWord = RandomizeThePhrase(category);
-            var randomWord = "test";
+            var randomWord = RandomizeThePhrase(category);
             gameConfig = new Game(randomWord);
             gameConfig.MarkCharacterAsUsed("");
             while (!gameConfig.AllCharacterAreGuessed())
@@ -29,6 +28,7 @@ namespace Hangman2
             }
 
             Console.WriteLine($"Game is over, your score is: {gameConfig.Score}");
+            Console.ReadKey();
         }
 
         private void NextRound()
@@ -37,6 +37,7 @@ namespace Hangman2
             //... Write user current score / word with guessed characters like 'han_g_an' / used characters
             
             Console.Write("Your score is: "+gameConfig.Score);
+            Console.Write("\nWord: "+gameConfig.WriteFlooredPhrase());
             //5. Ready user input
             //If it was already used then write that information on console
             //...
@@ -98,7 +99,7 @@ namespace Hangman2
             Random rnd = new Random();
             int randomLine = rnd.Next(0, lineCount);
             string wordToGuess = File.ReadLines(TextFileName).Skip(randomLine - 1).Take(1).First();
-            Console.WriteLine("Generated phrase is: " + wordToGuess);
+            //Console.WriteLine("Generated phrase is: " + wordToGuess);
             return wordToGuess;
         }
         static string GetInput()

@@ -35,7 +35,18 @@ namespace Hangman2.Model
         {
             //3. Check if all character are already guessed
             //...
-            return false;
+            foreach (char c in WordToGuess)
+            {
+                if (UsedCharacters.Contains(Char.ToString(c)))
+                {
+                    //CheckNext
+                }    
+                else
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         public bool IfAlreadyUsed(string character)
@@ -61,6 +72,21 @@ namespace Hangman2.Model
                 return false;
             }
         }
-
+        public string WriteFlooredPhrase()
+        {
+            string returnWord = "";
+            foreach(char c in WordToGuess)
+            {
+                if (UsedCharacters.Contains(Char.ToString(c)))
+                {
+                    returnWord = returnWord + c;
+                }
+                else
+                {
+                    returnWord = returnWord + "_";
+                }
+            }
+            return returnWord;
+        }
     }
 }
