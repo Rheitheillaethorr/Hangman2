@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using System
+using System;
 namespace Hangman2.Model
 {
     public class Game
@@ -18,7 +18,7 @@ namespace Hangman2.Model
         public void AddPoint()
         {
             var pointValueForGuessing = 5;
-            Score=+pointValueForGuessing;
+            Score += pointValueForGuessing;
         }
 
         public void SubtractPoint()
@@ -49,6 +49,17 @@ namespace Hangman2.Model
                 return false;
             }
             
+        }
+        public bool CheckIfCorrectGuess(string character)
+        {
+            if (WordToGuess.Contains(character))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
     }

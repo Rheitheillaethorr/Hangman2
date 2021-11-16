@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
-
+using System.Threading;
 namespace Hangman2
 {
     class HangmanGame
@@ -19,10 +19,10 @@ namespace Hangman2
             string category = RandomizeTheCategory();
             //2. Get random password
             //...
-            var randomWord = RandomizeThePhrase(category);
-
+            // Do uzycia var randomWord = RandomizeThePhrase(category);
+            var randomWord = "test";
             gameConfig = new Game(randomWord);
-
+            gameConfig.MarkCharacterAsUsed("");
             while (!gameConfig.AllCharacterAreGuessed())
             {
                 NextRound();
@@ -35,7 +35,7 @@ namespace Hangman2
         {
             //4. Clear console screen
             //... Write user current score / word with guessed characters like 'han_g_an' / used characters
-            Console.Clear();
+            
             Console.Write("Your score is: "+gameConfig.Score);
             //5. Ready user input
             //If it was already used then write that information on console
@@ -44,15 +44,29 @@ namespace Hangman2
             if(gameConfig.IfAlreadyUsed(userInput))
             {
                 Console.WriteLine("This char was used before!");
+                Thread.Sleep(2000);
             }
             else
             {
 
                 //6. Check if it is correct guess
                 //... gameConfig.UsedCharacters
-                gameConfig.MarkCharacterAsUsed(userInput);
-                gameConfig.AddPoint();
+                if (gameConfig.CheckIfCorrectGuess(userInput))
+                {
+                    gameConfig.MarkCharacterAsUsed(userInput);
+                    gameConfig.AddPoint();
+                    Console.WriteLine("Correct answer!");
+                    Thread.Sleep(2000);
+                }
+                else
+                {
+                    gameConfig.MarkCharacterAsUsed(userInput);
+                    gameConfig.SubtractPoint();
+                    Console.WriteLine("Wrong answer!");
+                    Thread.Sleep(2000);
+                }
             }
+            Console.Clear();
         }
 
         static string RandomizeTheCategory()
@@ -62,16 +76,16 @@ namespace Hangman2
             switch (randomCategory)
             {
                 case 0:
-                    Console.WriteLine("Computer choose fruits");
+                    Console.WriteLine("Computer chose category 'fruits'");
                     return "fruits.txt";
                 case 1:
-                    Console.WriteLine("Computer choose animals");
+                    Console.WriteLine("Computer chose category 'animals'");
                     return "animals.txt";
                 case 2:
-                    Console.WriteLine("Computer choose sport");
+                    Console.WriteLine("Computer chose category 'sport'");
                     return "sport.txt";
                 case 3:
-                    Console.WriteLine("Computer choose countries");
+                    Console.WriteLine("Computer chose category 'countries'");
                     return "countries.txt";
                 default:
                     return RandomizeTheCategory();
@@ -89,7 +103,7 @@ namespace Hangman2
         }
         static string GetInput()
         {
-            Console.WriteLine("Type a char");
+            Console.WriteLine("\nType a char");
             string givenString = Console.ReadLine();
             if (givenString.Length > 1)
             {
