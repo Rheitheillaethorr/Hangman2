@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-
+using System
 namespace Hangman2.Model
 {
     public class Game
@@ -36,6 +36,19 @@ namespace Hangman2.Model
             //3. Check if all character are already guessed
             //...
             return false;
+        }
+
+        public bool IfAlreadyUsed(string character)
+        {
+            if (UsedCharacters.Contains(character))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+            
         }
 
     }

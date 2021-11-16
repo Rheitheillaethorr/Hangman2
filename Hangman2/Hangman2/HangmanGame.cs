@@ -41,11 +41,18 @@ namespace Hangman2
             //If it was already used then write that information on console
             //...
             var userInput = GetInput();
+            if(gameConfig.IfAlreadyUsed(userInput))
+            {
+                Console.WriteLine("This char was used before!");
+            }
+            else
+            {
 
-            //6. Check if it is correct guess
-            //... gameConfig.UsedCharacters
-            gameConfig.MarkCharacterAsUsed(userInput);
-            gameConfig.AddPoint();
+                //6. Check if it is correct guess
+                //... gameConfig.UsedCharacters
+                gameConfig.MarkCharacterAsUsed(userInput);
+                gameConfig.AddPoint();
+            }
         }
 
         static string RandomizeTheCategory()
